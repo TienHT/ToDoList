@@ -25,7 +25,7 @@ SECRET_KEY = 'pq%4q7qg#73!g=i3)_so&)&qv4k+(3*)qc!@q7g&f4mx0a9fy^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mytreeplan.herokuapp.com']
 
 
 # Application definition

@@ -16,34 +16,59 @@
       </div>
 
       
-      {% if lengthItem == 0 %}
+      {% if lengthItem == 0  %}
       <h3 class="mt-4">Không có công việc cần làm</h3>
-      {% else %}  
-      <h3 class="mt-4">Có {{lengthItem}} việc cần làm : </h3>
+      {% elif lengthItem > 0  %}  
+      
+      <h3 class="mt-4">Có {{lengthItem}} việc cần làm : </h3>      
+        <div class="row mt-4">
+          <div class="col">
+            <ul class="list-group">
+              {% for item in todoItems %}
+                    {%if not item.is_completed %}
+                      <a href=""><li class="list-group-item">{{item.text}}
+                        <div class="float-right">
+                          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <a href="{% url 'main:completetodo' item.id %}"><button type="submit" class="btn btn-danger mr-sm-2 " >Hoàn Thành</button></a>
+                          <form action="{% url 'main:deletetodo' item.id %}" method="POST">
+                          <button type="submit" class="btn btn-danger">Xóa</button>
+                          </form>
+                            </div>
+                            
+                          </div>
+                        
+                        </div>
+                        
+                      </li>
+                    </a>
+                    {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+        
+        {% if lengthItemCompleted > 0 %}
+        <h3 class="mt-4">Có {{lengthItemCompleted}} đã hoàn thành: </h3>    
       <div class="row mt-4">
         <div class="col">
           <ul class="list-group">
             {% for item in todoItems %}
-             
-              <li class="list-group-item">{{item.text}}
-                <div class="float-right">
-                  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="First group">
-                      <button type="submit" class="btn btn-danger mr-sm-2 ">Sửa</button>
-                  <form action="{% url 'main:deletetodo' item.id %}" method="POST">
-                  <button type="submit" class="btn btn-danger">Xóa</button>
-                  </form>
+                  {%if item.is_completed %}
+                  <li class="list-group-item"><del>{{item.text}}</del>
+                    <div class="float-right">
+                      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                      <form action="{% url 'main:undo' item.id %}" method="POST">
+                      <button type="submit" class="btn btn-danger">Hoàn Tác</button>
+                      </form>
+                      </div>
                     </div>
-                    
-                  </div>
-                
-                </div>
-                
-              </li>
+                  </li>
+                  {% endif %}
             {% endfor %}
           </ul>
         </div>
       </div>
-      {% endif %}
-  
+         {% endif %}
  {% endblock %} 

@@ -1,2 +1,3 @@
-export SECRET_KEY ='53388ec0dc7fe980aff6f87d31df1f6de72f6a243575884f'
+export SECRET_KEY ='813308ce3432e28911ad024f7adb7ff857205272a14cf66f'
 export DEBUG_VALUE = "True"
+export foo = bar

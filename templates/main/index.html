@@ -26,11 +26,11 @@
             <ul class="list-group">
               {% for item in todoItems %}
                     {%if not item.is_completed %}
-                      <a href=""><li class="list-group-item">{{item.text}}
+                      <a href="{% url 'main:edit' item.id %}"><li class="list-group-item">{{item.text}}
                         <div class="float-right">
                           <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                             <div class="btn-group mr-2" role="group" aria-label="First group">
-                            <a href="{% url 'main:completetodo' item.id %}"><button type="submit" class="btn btn-danger mr-sm-2 " >Hoàn Thành</button></a>
+                            <a href="{% url 'main:completetodo' item.id %}"><button type="submit" class="btn btn-warning mr-sm-3 " >Hoàn Thành</button></a>
                           <form action="{% url 'main:deletetodo' item.id %}" method="POST">
                           <button type="submit" class="btn btn-danger">Xóa</button>
                           </form>

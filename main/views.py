@@ -35,4 +35,18 @@ def undo_to_do(request,idundo):
     item.is_completed = False
     item.save()
     return redirect('main:index')
+@csrf_exempt
+def edit_to_do(request,idedit):
+    if request.method == 'POST':
+        text = request.POST['textEdit']
+        itemedit = Todo.objects.get(id = idedit)
+        itemedit.text = text
+        itemedit.save()
+        return redirect('main:index')
+    else:
+        context = {
+            'item' : Todo.objects.get(id = idedit)
+        }
+      
+        return render(request,"main/edittodo.html",context)
 

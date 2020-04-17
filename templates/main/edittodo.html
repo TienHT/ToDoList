@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content%}
+<h3>Chỉnh sửa Nội Dụng:</h3>
+<form action="{% url 'main:edit' item.id %}" method="POST">
+    
+        <div class="form-group form-inline ">
+            <label for="" class="mr-sm-2">Tên Công Việc:</label>
+
+            <input type="text" class="form-control " name="textEdit" value="{{item.text}}" aria-describedby="emailHelp" placeholder="Enter email">
+            
+          </div>
+          <div class="float-md-left form-inline">
+            <button type="submit" class="btn btn-secondary  mr-sm-3">Hủy</button>   
+            <button type="submit" class="btn btn-success">Cập Nhật</button>    
+            
+          </div>
+        
+
+  </form>
+ 
+
+{% endblock %} 

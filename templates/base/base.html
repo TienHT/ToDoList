@@ -22,34 +22,60 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'main:index' %}">Trang Chủ <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
+              {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown
+                  Danh Sách
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
+                 
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
+                  <a class="dropdown-item" href="#">Tạo Danh Sách mới</a>
                 </div>
               </li>
+              {% endif %}
+              
               
             </ul>
             <form class="form-inline">
               <input class="form-control mr-sm-2" type="search" placeholder="Công việc..." aria-label="Search">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm Kiếm</button>
             </form>
-            
+            <ul class="navbar-nav">
+              
+              {% if user.is_authenticated %}
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'user:logout' %}">Đăng Xuất <span class="sr-only">(current)</span></a>
+              </li>
+               
+              {% else %}
+                <li class="nav-item ">
+                <a class="nav-link" href="{% url 'user:register' %}">Đăng Ký <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'user:login' %}">Đăng Nhập <span class="sr-only">(current)</span></a>
+              </li>
+              {% endif %}
+              
+              
+            </ul>
           </div>
     </nav>
 
 <div class="container ">
-    {% block content %}
+  {% block content %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{message.tags}}">
+        {{message}}
+      </div>
+    {% endfor %}    
+  {% endif %}
+
+    
             
-            {%endblock %}
+    {%endblock %}
         
     </div>
     

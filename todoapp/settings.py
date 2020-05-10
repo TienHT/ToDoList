@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'main',
+    'user',
 ]
-
+AUTH_USER_MODEL ='user.USER'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -80,7 +82,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'todoapp.sqlite3'),
     }
 }
-
+AUTH_USER_MODEL = 'user.USER'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -128,3 +130,4 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 django_heroku.settings(locals())
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

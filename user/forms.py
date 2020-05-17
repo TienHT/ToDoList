@@ -11,13 +11,13 @@ class RegisterForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ('username','email')
+        fields = ('username','email','fullName')
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
         qs = User.object.filter(username=username)
         if qs.exists():
-            raise forms.ValidationError("Tên đăng nhập đã được sử dụnng,vui lòng dùng tên đăng nhập khác")
+            raise forms.ValidationError("Tên đăng nhập đã được sử dụng,vui lòng dùng tên đăng nhập khác")
         return username
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -30,7 +30,22 @@ class RegisterForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
+            raise forms.ValidationError("Mật Khẩu Không trùng khớp")
         return password2
     def save(self):
-        User.object.create_user(username=self.cleaned_data['username'], email=self.cleaned_data['email'], password=self.cleaned_data['password2'])
+        User.object.create_user(username=self.cleaned_data['username'], email=self.cleaned_data['email'], fullName=self.cleaned_data['fullName'] ,password=self.cleaned_data['password2'])
+
+class LoginForm(forms.ModelForm):
+    
+    password = forms.CharField(label = 'Mật khẩu',widget=forms.PasswordInput)
+    
+    class Meta:
+        model = User
+        fields = ('username',)
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        qs = User.object.filter(username=username)
+        if qs.exists():
+            raise forms.ValidationError("Tên đăng nhập đã được sử dụng,vui lòng dùng tên đăng nhập khác")
+        return username

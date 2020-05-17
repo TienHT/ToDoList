@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +26,7 @@ SECRET_KEY = 'pq%4q7qg#73!g=i3)_so&)&qv4k+(3*)qc!@q7g&f4mx0a9fy^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mytreeplan.herokuapp.com/main/']
+ALLOWED_HOSTS = ['http://127.0.0.1:8000/main/']
 
 
 # Application definition
@@ -40,8 +41,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'main',
     'user',
+  
 ]
-AUTH_USER_MODEL ='user.USER'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -49,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'    
 ]
 
 ROOT_URLCONF = 'todoapp.urls'
@@ -71,18 +73,26 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'todoapp.wsgi.application'
-
+AUTH_USER_MODEL = 'user.User'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'todoapp.sqlite3'),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'todoapp.sqlite3'),
+    # }
+    'default':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME' : 'todolist',
+        'HOST' : 'localhost',
+        'POST' : '3306',
+        'USER' :'root',
+        'PASSWORD' :'030197',
     }
 }
-AUTH_USER_MODEL = 'user.USER'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -121,6 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

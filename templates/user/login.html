@@ -9,8 +9,8 @@
         {% csrf_token %}
         <fieldset >
             <legend class="border-bottom mb-4">
-                <p><label for="">Tài Khoản : </label>{{form.username}}</p>
-                <p><label for="">Mật Khẩu : </label>{{form.password}}</p>
+                <p><label for=""></label>{{form|crispy}}</p>
+                
             </legend> 
             <div class="form-group">
             <input type="hidden" name="next" value="{% url 'main:index' %}">

@@ -22,6 +22,7 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'main:index' %}">Trang Chủ <span class="sr-only">(current)</span></a>
               </li>
+              
               {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,21 +35,24 @@
                   <a class="dropdown-item" href="#">Tạo Danh Sách mới</a>
                 </div>
               </li>
+
               {% endif %}
-              
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'main:index' %}">About <span class="sr-only">(current)</span></a>
+              </li>
               
             </ul>
             <form class="form-inline">
+              {% if user.is_authenticated %}
               <input class="form-control mr-sm-2" type="search" placeholder="Công việc..." aria-label="Search">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm Kiếm</button>
+              {% endif %}
             </form>
             <ul class="navbar-nav">
-              
               {% if user.is_authenticated %}
               <li class="nav-item ">
                 <a class="nav-link" href="{% url 'user:logout' %}">Đăng Xuất <span class="sr-only">(current)</span></a>
               </li>
-               
               {% else %}
                 <li class="nav-item ">
                 <a class="nav-link" href="{% url 'user:register' %}">Đăng Ký <span class="sr-only">(current)</span></a>
@@ -62,23 +66,20 @@
             </ul>
           </div>
     </nav>
-
-<div class="container ">
-  {% block content %}
-  {% if messages %}
+    {% if messages %}
     {% for message in messages %}
       <div class="alert alert-{{message.tags}}">
         {{message}}
       </div>
     {% endfor %}    
   {% endif %}
-
-    
-            
+<div class="container ">
+  {% block content %}
+   
     {%endblock %}
         
     </div>
-    
+   
 </body>
-  
+
 </html>

@@ -4,12 +4,25 @@
       <div class="row mt-4 ">
         <div class="col ">
           <h2>Công Việc</h2>
-          
-          <form class="form-inline" action="{% url 'main:addtodo' %}" method="POST">
+          <div class="inline"> 
+            <form class="inline" action="{% url 'main:addtodo' %}" method="POST">
            
             <input type="text" name="content" class="form-control mb-2 mr-sm-2"  placeholder="Thêm công việc ...." required>
+            <div class="dropdown show">
+              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown link
+              </a>
+              {% for item in todoItems %}
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">{{item.task_list.title}}</a>
+               <a class="dropdown-item" href="#">tạo Mới</a>
+              </div>
+               {% endfor%}
+            </div>
             <button type="submit" class="btn btn-success mb-2">Thêm</button>
           </form>
+          </div>
+          
          
 
         </div>

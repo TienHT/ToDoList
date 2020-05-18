@@ -20,7 +20,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'main:index' %}">Trang Chủ <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'main:index' %}">Home <span class="sr-only">(current)</span></a>
               </li>
               
               {% if user.is_authenticated %}
@@ -28,14 +28,16 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Danh Sách
                 </a>
+                
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Action</a>
-                 
+                  {% for item in listTask%}
+                  <a class="dropdown-item" href="{{item.id}}">{{item.title}}</a>
+                  {%endfor%}
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Tạo Danh Sách mới</a>
+                  <a class="dropdown-item" href="#">Add New Task List</a>
                 </div>
               </li>
-
+              
               {% endif %}
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'main:index' %}">About <span class="sr-only">(current)</span></a>
@@ -44,21 +46,21 @@
             </ul>
             <form class="form-inline">
               {% if user.is_authenticated %}
-              <input class="form-control mr-sm-2" type="search" placeholder="Công việc..." aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm Kiếm</button>
+              <input class="form-control mr-sm-2" type="search" placeholder="Searching To Do List..." aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               {% endif %}
             </form>
             <ul class="navbar-nav">
               {% if user.is_authenticated %}
               <li class="nav-item ">
-                <a class="nav-link" href="{% url 'user:logout' %}">Đăng Xuất <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'user:logout' %}">Log out<span class="sr-only">(current)</span></a>
               </li>
               {% else %}
                 <li class="nav-item ">
-                <a class="nav-link" href="{% url 'user:register' %}">Đăng Ký <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'user:register' %}">Sign Up<span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link" href="{% url 'user:login' %}">Đăng Nhập <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'user:login' %}">Log In<span class="sr-only">(current)</span></a>
               </li>
               {% endif %}
               

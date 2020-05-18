@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse,HttpResponseRedirect
 from django.utils import timezone
-from .models import Todo
+from .models import Todo,List
 from user.models import User,UserManager
 from django.shortcuts import redirect,reverse
 from user.forms import LoginForm
@@ -13,23 +13,26 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     if not request.user.is_authenticated:
-        messages.error(request,f'Bạn Cần Đăng Nhập Trước Sử Dụng Dịch Vụ')
+        messages.error(request,f'You must log in to continue!')
         return redirect('user:login')
     else:
-        todoItems = Todo.objects.filter(user = request.user).order_by("-added_date")
-        lengthItem =Todo.objects.filter(user = request.user,is_completed = False).count()
-        lengthItemCompleted =Todo.objects.filter(user = request.user,is_completed = True).count()
+        listSpecificTask = List.objects.get(user = request.user,title = 'Daily Activities')
+        listTask = List.objects.filter(user = request.user)
+        listToDo = Todo.objects.filter(listTask_id = listSpecificTask.id)
+        # lengthItem =Todo.objects.filter(user = request.user,is_completed = False).count()
+        # lengthItemCompleted =Todo.objects.filter(user = request.user,is_completed = True).count()
         
-    return render(request,'main/index.html',{'todoItems':todoItems ,'lengthItem':lengthItem,'lengthItemCompleted':lengthItemCompleted})
+    return render(request,'main/index.html',{'listSpecificTask':listSpecificTask,'listToDo':listToDo,'listTask':listTask})
+
 @csrf_exempt
 @login_required
 def add_to_do(request):
     # request list todo in form
     currentDate = timezone.now()
     currentText = request.POST.get('content', False)
-
+    currentTask = request.POST.get('idTask',False)
     #add list todo in database
-    Todo.objects.create(user = request.user,text =currentText,added_date = currentDate )
+    Todo.objects.create(text =currentText,listTask_id =int(currentTask),added_date = currentDate )
     return redirect('main:index')
 @csrf_exempt
 @login_required

@@ -34,7 +34,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser,PermissionsMixin):
     #User information
-    username=models.CharField(max_length = 255,verbose_name = 'Tên Đăng Nhập',unique = True,default = '')
+    username=models.CharField(max_length = 255,unique = True,default = '')
     email = models.EmailField(max_length = 255,unique =True)
     fullName = models.CharField(max_length = 255,verbose_name = 'Họ Tên')
     gender = models.CharField(max_length = 100)

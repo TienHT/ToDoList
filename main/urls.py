@@ -10,3 +10,4 @@ urlpatterns = [
     path('undo/<int:idundo>',views.undo_to_do, name= 'undo'),
     path('edit/<int:idedit>',views.edit_to_do, name= 'edit'),
 ]
+ 

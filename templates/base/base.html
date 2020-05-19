@@ -26,12 +26,13 @@
               {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Danh Sách
+                  Task
                 </a>
                 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'main:index' %}">All List</a>
                   {% for item in listTask%}
-                  <a class="dropdown-item" href="{{item.id}}">{{item.title}}</a>
+                  <a class="dropdown-item" href="{% url 'main:indexSpecificTask' item.id %}">{{item.title}}</a>
                   {%endfor%}
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#">Add New Task List</a>

@@ -3,7 +3,10 @@
  {% block content%}
       <div class="row mt-4 ">
         <div class="col ">
-          <h2>To Do List</h2>
+          {% for item in listTask %}
+            <h2>{{listTask.title}} </h2>
+          {%endfor%}
+         
           <div class="inline"> 
             <form class="inline" action="{% url 'main:addtodo' %}" method="POST">
            
@@ -33,60 +36,49 @@
           </form>
           </div>
           
-         
 
         </div>
       </div>
-
-      
-   
-
-      
-       
-        <div class="row mt-4">
-          <div class="col"> 
-          
-                   <h3 class="mt-4">To Do List:</h3>  
-                 
-            <ul class="list-group" >
-             
-                  
-                   {% for obj in listObjToDo %}
-                   {%if not obj.is_completed %}
-                      <a href="{% url 'main:edit' obj.id %}">
-                      <li class="list-group-item">{{obj.text}}
-                        <div class="float-right">
-                          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                            <div class="btn-group mr-2" role="group" aria-label="First group">
-                            <a href="{% url 'main:completetodo' obj.id %}"><button type="submit" class="btn btn-warning mr-sm-3 " >Complete</button></a>
-                          <form action="{% url 'main:deletetodo' obj.id %}" method="POST">
-                          <button type="submit" class="btn btn-danger">Remove</button>
-                          </form>
-                            </div>
-                            
-                          </div>
-                        
-                        </div><br><span >&nbsp;in {{obj.listTask.title}}</span>
-                        
-                      </li>  
-                      </a><br>
-                    
-
-                      {% endif %}
-                    {% endfor %}
-              
-              
-            </ul>
-           
-          </div>
-        </div>
-     
+      <div class="row mt-4">
+        <div class="col"> 
         
-        <h3 class="mt-4">Work Finished</h3>    
+                 <h3 class="mt-4">{{listCurrectTask.title}}</h3>  
+               
+          <ul class="list-group" >
+           
+                
+                 {% for item in listSpecificTask %}
+                    {%if not item.is_completed %}
+
+                    <a href="{% url 'main:edit' item.id %}">
+                    <li class="list-group-item">{{item.text}}
+                      <div class="float-right">
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                          <div class="btn-group mr-2" role="group" aria-label="First group">
+                          <a href="{% url 'main:completetodo' item.id %}"><button type="submit" class="btn btn-warning mr-sm-3 " >Complete</button></a>
+                        <form action="{% url 'main:deletetodo' item.id %}" method="POST">
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                          </div>
+                          
+                        </div>
+                      
+                      </div><br><span >&nbsp;in {{item.listTask.title}}</span>
+                      
+                    </li>  
+                    </a>
+                    {% endif %}
+                  {% endfor %}
+                  
+          </ul>
+         
+        </div>
+      </div>
+      <h3 class="mt-4">Work Finished</h3>    
       <div class="row mt-4">
         <div class="col">
           <ul class="list-group">
-            {% for obj in listObjToDo %}
+            {% for obj in listSpecificTask %}
                   {%if obj.is_completed %}
                   <li class="list-group-item"><del>{{obj.text}}</del>
                     <div class="float-right">
@@ -106,5 +98,9 @@
           </ul>
         </div>
       </div>
+      
+   
+
+    
        
  {% endblock %} 

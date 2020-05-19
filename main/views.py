@@ -16,14 +16,25 @@ def index(request):
         messages.error(request,f'You must log in to continue!')
         return redirect('user:login')
     else:
-        listSpecificTask = List.objects.get(user = request.user,title = 'Daily Activities')
         listTask = List.objects.filter(user = request.user)
-        listToDo = Todo.objects.filter(listTask_id = listSpecificTask.id)
+        listTest = Todo.objects.filter(listTask__user = request.user)
+        
+    
+        
+    return render(request,'main/index.html',{'listTask':listTask,'listObjToDo':listTest}) 
+
+def indexSpecificTask(request,idSpecificTask):
+    if not request.user.is_authenticated:
+        messages.error(request,f'You must log in to continue!')
+        return redirect('user:login')
+    else:
+        listSpecificTask = Todo.objects.filter(listTask_id = idSpecificTask)
+        listCurrectTask = List.objects.get(id = idSpecificTask)
+        listTask = List.objects.filter(user = request.user)
         # lengthItem =Todo.objects.filter(user = request.user,is_completed = False).count()
         # lengthItemCompleted =Todo.objects.filter(user = request.user,is_completed = True).count()
         
-    return render(request,'main/index.html',{'listSpecificTask':listSpecificTask,'listToDo':listToDo,'listTask':listTask})
-
+    return render(request,'main/indexSpecificTask.html',{'listSpecificTask':listSpecificTask,'listCurrectTask':listCurrectTask,'listTask':listTask}) 
 @csrf_exempt
 @login_required
 def add_to_do(request):

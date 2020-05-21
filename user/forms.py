@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from .models import User
-
+from main.models import List
 
 class RegisterForm(forms.ModelForm):
     
@@ -33,7 +33,9 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError("Mật Khẩu Không trùng khớp")
         return password2
     def save(self):
-        User.object.create_user(username=self.cleaned_data['username'], email=self.cleaned_data['email'], fullName=self.cleaned_data['fullName'] ,password=self.cleaned_data['password2'])
+        username = self.cleaned_data['username']
+        User.object.create_user(username=username, email=self.cleaned_data['email'], fullName=self.cleaned_data['fullName'] ,password=self.cleaned_data['password2'])
+        List.objects.create(user_id = User.object.get(username = username).id)
 
 class LoginForm(forms.ModelForm):
     

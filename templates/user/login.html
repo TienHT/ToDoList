@@ -3,27 +3,27 @@
 {% load static %}
 {% block content%}
 
-<h1>Đăng Nhập Tài Khoản</h1>
+
 <div class="content-section">
-    <form action="" method="post">
-        {% csrf_token %}
-        <fieldset >
-            <legend class="border-bottom mb-4">
-                <p><label for=""></label>{{form|crispy}}</p>
-                
-            </legend> 
-            <div class="form-group">
-            <input type="hidden" name="next" value="{% url 'main:index' %}">
-            <button class="btn btn-outline-info" type="submit">Đăng nhập</button>
+    <div class="body-login">
+        <form action="" method="post">
+            {% csrf_token %}
+          <a href="#"> <img src="{% static 'media/logo_transparent.png' %}" class="logo" alt="Demo logo"></a>
+       <h1>Welcome</h1>
+        <div class="input-group">
+         {{form.username}}
+          <label for="username">Username</label>
         </div>
-        </fieldset>
        
-    </form>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            Chưa có tài khoản? <a href="{% url 'user:register' %}" class="ml-2">Đăng Ký</a>
-        </small>
-    </div>
+         <div class="input-group">
+          {{form.password}}
+          <label for="password">Password</label>
+        </div>
+       <button type ="submit">Login</button>
+       <input type="hidden" name="next" value="{% url 'main:index' %}">
+       <p>Don't have a account? <a href="{% url 'user:register' %}" class="signin">Sign in</a></p>
+     </form>
+         </div>
 </div>
 
 {% endblock %} 

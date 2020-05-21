@@ -3,25 +3,39 @@
 {% load static %}
 {% block content%}
 
-<h1>Tạo Tài Khoản</h1>
+
 <div class="content-section">
-    <form action="" method="post">
-        {% csrf_token %}
-        <fieldset >
-            <legend class="border-bottom mb-4">
-                        {{form|crispy }}
-            </legend> 
-            <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Đăng Ký</button>
+    <div class="body-login">
+        <form action="" method="post">
+            {% csrf_token %}
+          <a href="#"> <img src="{% static 'media/logo_transparent.png' %}" class="logo" alt="Demo logo"></a>
+       <h1>Create new user</h1>
+        <div class="input-group">
+         {{form.username}}
+          <label for="username">Username</label>
         </div>
-        </fieldset>
-       
-    </form>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            Đã có tài khoản? <a href="{% url 'user:login' %}" class="ml-2">Đăng Nhập</a>
-        </small>
-    </div>
+        <div class="input-group">
+            {{form.email}}
+            <label for="password">Email</label>
+          </div>
+          <div class="input-group">
+            {{form.fullName}}
+            <label for="password">FullName</label>
+          </div>
+         <div class="input-group">
+          {{form.password}}
+          <label for="password">Password</label>
+        </div>
+        <div class="input-group">
+            {{form.password2}}
+            <label for="password">Confirmed Password</label>
+          </div>
+        
+       <button type ="submit">Sign Up</button>
+       <input type="hidden" name="next" value="{% url 'user:login' %}">
+       <p>Have a account? <a href="{% url 'user:login' %}" class="signin">Sign out</a></p>
+     </form>
+         </div>
 </div>
 
 {% endblock %} 

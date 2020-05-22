@@ -6,7 +6,6 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auth', '0012_remove_user_last_name'),
         ('user', '0006_auto_20200421_2102'),
     ]
 

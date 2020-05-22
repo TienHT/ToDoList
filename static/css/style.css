@@ -1,4 +1,5 @@
 body{
+  font-family: 'Roboto', sans-serif;
   color: #333333;
   
 }
@@ -18,10 +19,11 @@ body{
   width: 30%;
   top:0px;
   transform:translate(-50%,-50%);
+  
 }
 .body-login .input-group {
   position: relative;
-  padding: 10px 0;
+  padding: 15px 0;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -63,7 +65,7 @@ body{
 .body-login form label {
   color: #616161;
   position: absolute;
-  left: 25%;
+  left: 80px;
   top: 30px;
   font-weight: 100;
   font-size: 13px;
@@ -74,7 +76,7 @@ body{
 input:focus+label,
 input:valid+label {
   top: 10px;
-  left: 25%;
+  left: 80px;
   font-size: 15px;
   color: #616161;
 }
@@ -92,4 +94,5 @@ input:valid+label {
 .body-login a {
   text-decoration: none;
   color: #07e358;
+  
 }

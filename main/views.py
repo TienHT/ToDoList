@@ -37,6 +37,29 @@ def indexSpecificTask(request,idSpecificTask):
     return render(request,'main/indexSpecificTask.html',{'listSpecificTask':listSpecificTask,'listCurrectTask':listCurrectTask,'listTask':listTask}) 
 @csrf_exempt
 @login_required
+def add_list(request):
+    # request list todo in form
+  
+    currentTitle = request.POST.get('content', False)
+    currentUser= request.user
+    
+    #add list todo in database
+    List.objects.create(title =currentTitle,user_id = User.object.get(username = currentUser).id)
+    return redirect('main:index')
+@csrf_exempt
+@login_required
+def search(request):
+    # request list todo in form
+    if request.method =='POST':
+        currentInput = request.POST.get('search-input', False)
+        listTask = List.objects.filter(user = request.user)
+        listTest = Todo.objects.filter(listTask__user = request.user,text__icontains=currentInput)
+        return render(request,'main/index.html',{'listTask':listTask,'listObjToDo':listTest}) 
+    #add list todo in database
+    
+    return redirect('main:index')
+@csrf_exempt
+@login_required
 def add_to_do(request):
     # request list todo in form
     currentDate = timezone.now()

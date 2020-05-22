@@ -79,18 +79,18 @@ AUTH_USER_MODEL = 'user.User'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'todoapp.sqlite3'),
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'todoapp.sqlite3'),
+     }
+    # 'default':{
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME' : 'todo',
+    #     'HOST' : 'localhost',
+    #     'POST' : '3306',
+    #     'USER' :'root',
+    #     'PASSWORD' :'030197',
     # }
-    'default':{
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME' : 'todo',
-        'HOST' : 'localhost',
-        'POST' : '3306',
-        'USER' :'root',
-        'PASSWORD' :'030197',
-    }
 }
 
 

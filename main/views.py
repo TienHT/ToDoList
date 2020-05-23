@@ -75,6 +75,11 @@ def delete_to_do(request,iddelete):
     return redirect('main:index')
 @csrf_exempt
 @login_required
+def delete_list(request,idlist):
+    List.objects.get(id =idlist).delete()
+    return redirect('main:index')
+@csrf_exempt
+@login_required
 def complete_to_do(request,idcomplete):
     item = Todo.objects.get(id =idcomplete)
     item.is_completed = True

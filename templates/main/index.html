@@ -49,8 +49,6 @@
                    <h3 class="mt-4">To Do List:</h3>  
                  
             <ul class="list-group" >
-             
-                  
                    {% for obj in listObjToDo %}
                    {%if not obj.is_completed %}
                       <a href="{% url 'main:edit' obj.id %}">

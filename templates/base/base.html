@@ -13,62 +13,69 @@
 <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light " style="background-color:#92ED6B;">
-        <a class="navbar-brand" href="{% url 'main:index' %}">
-            <img src="{% static 'media/logo_transparent.png' %}" width="40" height="40" class="d-inline-block align-top" alt="">
+  <div class="nar-bar">  
+    <div class="left"><ul>
+        <a href="{% url 'main:index' %}">
+            <img src="{% static 'media/logo_transparent.png' %}" width="40" height="40" alt="">
           </a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'main:index' %}">Home <span class="sr-only">(current)</span></a>
-              </li>
+        
+            <li><a href="{% url 'main:index' %}">Home</a></li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Task
+              </a>
               
-              {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Task
-                </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'main:index' %}">All List</a>
+                {% for item in listTask%}
+                <a class="dropdown-item" href="{% url 'main:indexSpecificTask' item.id %}">{{item.title}}</a>
+                {%endfor%}
                 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{% url 'main:index' %}">All List</a>
-                  {% for item in listTask%}
-                  <a class="dropdown-item" href="{% url 'main:indexSpecificTask' item.id %}">{{item.title}}</a>
-                  {%endfor%}
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">Add New Task List</a>
-                </div>
-              </li>
-              
-              {% endif %}
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'main:index' %}">About <span class="sr-only">(current)</span></a>
-              </li>
-              
-            </ul>
-            {% if user.is_authenticated %}
-            <form class="form-inline" action="{% url 'main:search' %}" method="POST">
-              <input class="form-control mr-sm-2" name="search-input" type="search" placeholder="Searching To Do List..." aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form> 
-            {% endif %}
-            <ul class="navbar-nav">
-              {% if user.is_authenticated %}
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'user:logout' %}">Log out<span class="sr-only">(current)</span></a>
-              </li>
-              {% else %}
-                <li class="nav-item ">
-                <a class="nav-link" href="{% url 'user:register' %}">Sign Up<span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'user:login' %}">Log In<span class="sr-only">(current)</span></a>
-              </li>
-              {% endif %}
-              
-              
-            </ul>
-          </div>
-    </nav>
+               
+             
+            </li>
+            
+            <li><a href="">About
+
+            </a></li>
+           
+        </ul>
+    </div>
+    <div class="center">
+      {% if user.is_authenticated %}
+        <form class="form-group form-inline" action="{% url 'main:search' %}" method="POST">
+            <input class="form-control mr-sm-2" name="search-input" type="search" placeholder="Searching To Do List..." aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form> 
+          {% endif %} 
+    </div>
+    <div class="right mr-auto">
+        <ul>
+          {% if user.is_authenticated %}
+          <li class="  nav-item dropdown">
+            <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Menu
+            </a>
+            
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Your Profile</a>
+              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">Task List</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'user:logout' %}" data-toggle="modal" data-target="#myModal">Log Out</a>
+            </div>
+          </li>
+          {% else %} 
+            <li class="nav-item ">
+            <a class="nav-link" href="{% url 'user:register' %}">Sign Up<span class="sr-only"></span></a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'user:login' %}">Log In<span class="sr-only"></span></a>
+          </li>
+          {% endif %}
+        </ul>
+    </div>
+</div>
+
     {% if messages %}
     {% for message in messages %}
       <div class="alert alert-{{message.tags}}">
@@ -87,16 +94,47 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
-        <h3>Add new Task List</h3>
-        <form action="{% url 'main:addlist'%}" method="POST">
+        <h2>Task List</h2>
+        
+        <form class="form-inline" action="{% url 'main:addlist'%}" method="POST">
           {% csrf_token %}
           <input type="text" name="content" class="form-control mb-2 mr-sm-2"  placeholder="Add new task list ...." required>
           <button type="submit" class="btn btn-success mb-2">ADD</button>
         </form>
+        <h4>List Task</h4>
+        <ul class="list-group" >
+          
+          {%if listTask %}
+          {%for item in listTask%}
+            
+             <li class="list-group-item">{{item.title}}
+               <div class="float-right">
+                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                   <div class="btn-group mr-2" role="group" aria-label="First group">
+                  
+                 <form action="{% url 'main:deletelist' item.id %}" method="POST">
+                 <button type="submit" class="btn btn-danger">Remove</button>
+                 </form>
+                   </div>
+                   
+                 </div>
+               
+               </div>
+               
+             </li>  
+            
+             {%endfor%}
+             {%else%}
+             <h4>No Task List Available </h4>
+             {% endif %}
+          
+     
+     
+   </ul>
+  
       </div>
       
     </div>

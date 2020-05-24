@@ -58,10 +58,10 @@
             </a>
             
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Your Profile</a>
+              <a class="dropdown-item" href="{% url 'user:profile' %}">Your Profile</a>
               <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModal">Task List</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'user:logout' %}" data-toggle="modal" data-target="#myModal">Log Out</a>
+              <a class="dropdown-item" href="{% url 'user:logout' %}" >Log Out</a>
             </div>
           </li>
           {% else %} 

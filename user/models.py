@@ -38,9 +38,11 @@ class User(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(max_length = 255,unique =True)
     fullName = models.CharField(max_length = 255,verbose_name = 'Họ Tên')
     gender = models.CharField(max_length = 100)
-    birthday = models.DateTimeField(default = timezone.now)
+    birthday = models.DateField(null=True, blank=True)
     address = models.TextField()
     phoneNumber = models.CharField(max_length = 11)
+    image=models.FileField(default='default-picture.png')
+    description = models.TextField(default='')
     #manage information
     is_staff = models.BooleanField(default = False)
     is_active = models.BooleanField(default = True)

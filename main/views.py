@@ -8,6 +8,7 @@ from django.shortcuts import redirect,reverse
 from user.forms import LoginForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import localtime, now
 # Create your views here.
 
 
@@ -42,7 +43,6 @@ def add_list(request):
   
     currentTitle = request.POST.get('content', False)
     currentUser= request.user
-    
     #add list todo in database
     List.objects.create(title =currentTitle,user_id = User.object.get(username = currentUser).id)
     return redirect('main:index')
@@ -53,6 +53,7 @@ def search(request):
     if request.method =='POST':
         currentInput = request.POST.get('search-input', False)
         listTask = List.objects.filter(user = request.user)
+       
         listTest = Todo.objects.filter(listTask__user = request.user,text__icontains=currentInput)
         return render(request,'main/index.html',{'listTask':listTask,'listObjToDo':listTest}) 
     #add list todo in database
@@ -65,8 +66,19 @@ def add_to_do(request):
     currentDate = timezone.now()
     currentText = request.POST.get('content', False)
     currentTask = request.POST.get('idTask',False)
-    #add list todo in database
-    Todo.objects.create(text =currentText,listTask_id =int(currentTask),added_date = currentDate )
+
+    currentDate = request.POST['date-input']
+    currentTime = request.POST['time-input']
+    if currentDate:
+        if currentTime:
+            Todo.objects.create(text =currentText,listTask_id =int(currentTask),added_date = currentDate ,due_date = currentDate,due_time = currentTime)
+        elif not currentTime:
+            Todo.objects.create(text =currentText,listTask_id =int(currentTask),added_date = currentDate ,due_date = currentDate)
+    elif not currentDate:
+        if currentTime:
+            Todo.objects.create(text =currentText,listTask_id =int(currentTask),added_date = currentDate ,due_date = localtime(now()).date(),due_time = currentTime)
+        elif not currentTime:
+            Todo.objects.create(text =currentText,listTask_id =int(currentTask),added_date = currentDate)
     return redirect('main:index')
 @csrf_exempt
 @login_required

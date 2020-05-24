@@ -6,12 +6,13 @@
           <h2>To Do List</h2>
           <div class="inline"> 
             <form class="inline" action="{% url 'main:addtodo' %}" method="POST">
-           
             <input type="text" name="content" class="form-control mb-2 mr-sm-2"  placeholder="Add to do list ...." required>
-        
+            <div class="form-group form-inline ">
+                <input class="form-control" type="date" name="date-input">
+                <input class="form-control" type="time"  name="time-input">
+            </div>
                 <div class="form-row align-items-center">
                   <div class="col-auto my-1">
-                    
                     <select class="custom-select mr-sm-2" name="idTask" required>
                       <option selected value="">Choose...</option>
                       {% for item in listTask%}
@@ -19,9 +20,9 @@
                       {%endfor%}
                     </select>
                   </div>
-    
+                 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-
+                
                 {%for item in listTask%}
                 <a class="dropdown-item" href="{% url 'main:indexSpecificTask' item.id %}">{{item.title}}</a>
                 {% endfor%}
@@ -29,6 +30,7 @@
               </div>
               
             </div>
+          
             <button type="submit" class="btn btn-success mb-2">ADD</button>
           </form>
           </div>
@@ -52,22 +54,39 @@
                    {% for obj in listObjToDo %}
                    {%if not obj.is_completed %}
                       <a href="{% url 'main:edit' obj.id %}">
-                      <li class="list-group-item">{{obj.text}}
+                      <li class="list-group-item">
+                        {{obj.text}}                 
                         <div class="float-right">
+                          
                           <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                           
                             <div class="btn-group mr-2" role="group" aria-label="First group">
-                            <a href="{% url 'main:completetodo' obj.id %}"><button type="submit" class="btn btn-warning mr-sm-3 " >Complete</button></a>
+                              
+                                  
+                              <button type="button" class="btn btn-secondary mr-sm-3 " disabled>
+                                {%if obj.due_date%}
+                                in {{obj.due_date}}
+                                {%endif%}
+                                {%if obj.due_time%}
+                                 at {{obj.due_time}}
+                                 {%endif%}
+                                </button>
+                            
+                              <a href="{% url 'main:completetodo' obj.id %}"><button type="submit" class="btn btn-warning mr-sm-3 " >Complete</button></a>
                           <form action="{% url 'main:deletetodo' obj.id %}" method="POST">
                           <button type="submit" class="btn btn-danger">Remove</button>
                           </form>
                             </div>
                             
                           </div>
-                        
+                          
                         </div><br><span >&nbsp;in {{obj.listTask.title}}</span>
                         
                       </li>  
-                      </a><br>
+                     
+                      </a>
+                      
+                      
                     
 
                       {% endif %}

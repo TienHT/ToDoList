@@ -15,7 +15,8 @@ class List(models.Model):
 class Todo(models.Model):
     text =models.CharField(max_length = 255)
     listTask = models.ForeignKey(List,on_delete=models.CASCADE,default = None,blank = True,null=True)
-    due_time = models.DateField(default = timezone.now())
+    due_date = models.DateField(default = None,blank = True,null=True)
+    due_time = models.TimeField(default = None,blank = True,null=True)
     added_date =models.DateTimeField(auto_now_add=True)
     description = models.TextField(default='')
     is_completed = models.BooleanField(default=False)
